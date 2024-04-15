@@ -16,7 +16,7 @@ if( !class_exists( 'MV_Slider_Post_Type') ){
                 'mv-slider',
                 array(
                     'label' => 'Slider',
-                    'description'   => 'Sliders',
+                    'description' => 'Sliders',
                     'labels' => array(
                         'name'  => 'Sliders',
                         'singular_name' => 'Slider'
@@ -89,7 +89,7 @@ if( !class_exists( 'MV_Slider_Post_Type') ){
                 return;
             }
 
-            if( isset( $_POST['post_type']) && $_POST['post_type'] == 'mv-slider'){
+            if( isset( $_POST['post_type']) && $_POST['post_type'] == 'mv-slider' ){
                 if( !current_user_can( 'edit_page', $post_id)){
                     return;
                 } elseif(!current_user_can( 'edit_post', $post_id)) {
