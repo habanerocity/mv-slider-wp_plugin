@@ -38,6 +38,8 @@ along with MV Slider. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
         function __construct(){
             $this->define_constants();
 
+            require_once( MV_SLIDER_PATH . 'functions/functions.php' );
+
             add_action( 'admin_menu', array( $this, 'add_menu' ) );
 
             require_once( MV_SLIDER_PATH . 'post-types/class.mv-slider-cpt.php');
@@ -69,7 +71,13 @@ along with MV Slider. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
         }
 
         public static function uninstall(){
+            delete_option( 'mv_slider_options');
 
+            $posts = get_posts( array( 'post_type' => 'mv-slider', 'number_posts' => -1, 'post_status' => 'any' ));
+
+            foreach( $posts as $post){
+                wp_delete_post( $post->ID, true);
+            }
         }
 
         public function add_menu(){
@@ -118,7 +126,6 @@ along with MV Slider. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
         public function register_scripts(){
             wp_register_script( 'mv-slider-main-jq', MV_SLIDER_URL . 'vendor/flexslider/jquery.flexslider-min.js', array( 'jquery' ), MV_SLIDER_VERSION, true );
-            wp_register_script( 'mv-slider-options-js', MV_SLIDER_URL . 'vendor/flexslider/flexslider.js', array( 'jquery' ), MV_SLIDER_VERSION, true );
             wp_register_style( 'mv-slider-main-css', MV_SLIDER_URL . 'vendor/flexslider/flexslider.css', array(), MV_SLIDER_VERSION, 'all' );
             wp_register_style( 'mv-slider-style-css', MV_SLIDER_URL . 'assets/css/frontend.css', array(), MV_SLIDER_VERSION, 'all' );
         }
